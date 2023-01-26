@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Client;
+namespace App\Tests\Application;
 
 use App\Client\CurlClient;
 use PHPUnit\Framework\TestCase;
 
+/**
+ *
+ * @group app_get
+ */
 class GetUseCaseTest extends TestCase
 {
     private ClientInterface $client;
