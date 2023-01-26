@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteUseCaseTest extends BaseTestCaseTest
 {
-  
     public function testGiveCurlClientWhenSendDeleteMethodaReturnValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");

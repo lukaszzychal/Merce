@@ -9,7 +9,6 @@ use App\Client\CurlClient;
 
 class PutUseCaseTest extends BaseTestCaseTest
 {
-
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");

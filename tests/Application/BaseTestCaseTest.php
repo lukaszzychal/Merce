@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Tests\Application;
+
 use App\Client\ClientInterface;
 use App\Client\CurlClient;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -13,6 +14,6 @@ class BaseTestCaseTest extends TestCase
     {
         parent::setUp();
         $factory = new Psr17Factory();
-        $this->client = new CurlClient($factory,$factory);
+        $this->client = new CurlClient($factory, $factory);
     }
 }

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class PostUseCaseTest extends BaseTestCaseTest
 {
-
     public function testGiveCurlClientWhenSendPostMethodWithDataReturnValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");
