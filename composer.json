@@ -10,7 +10,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\Client\\": "tests/Client",
+            "App\\Tests\\": "tests",
             "App\\Client\\": "src/Client"
         }
     },
