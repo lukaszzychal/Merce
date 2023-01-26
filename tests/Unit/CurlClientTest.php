@@ -20,6 +20,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CurlClientTest extends TestCase
 {
+    private const HOST = 'http://localhost';
     public function testGiveCurlClientCallSendRequestReturnSuccess(): void
     {
         $resposneMock = $this->createStub(ResponseInterface::class);
@@ -54,12 +55,12 @@ class CurlClientTest extends TestCase
         $requestMock =  $this->createStub(RequestInterface::class);
         $requestFactoryMock = $this->createMock(RequestFactoryInterface::class);
         $requestFactoryMock->expects($this->once())
-            ->method('createRequest')->withConsecutive([HttpMethod::METHOD_HTTP_GET, ProviderData::HOST])
+            ->method('createRequest')->withConsecutive([HttpMethod::METHOD_HTTP_GET, self::HOST])
             ->willReturn($requestMock);
 
 
         $curlClient = new CurlClient($resposneFactoryMock, $requestFactoryMock);
-        $resposne = $curlClient->get(ProviderData::HOST);
+        $resposne = $curlClient->get(self::HOST);
 
         $this->assertInstanceOf(ResponseInterface::class, $resposne);
         $this->assertSame(HttpStatus::STATUS_OK, $resposne->getStatusCode());

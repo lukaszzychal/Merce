@@ -18,10 +18,11 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CurlClientTest extends TestCase
 {
+    private const HOST = 'http://localhost';
     public function testCurlClient(): void
     {
         $factory = new Psr17Factory();
-        $request = $factory->createRequest(HttpMethod::METHOD_HTTP_GET, ProviderData::HOST);
+        $request = $factory->createRequest(HttpMethod::METHOD_HTTP_GET, self::HOST);
         $curlClient = new CurlClient($factory, $factory);
         $curlClient->sendRequest($request);
 
@@ -34,7 +35,7 @@ class CurlClientTest extends TestCase
     public function testGiveCurlClientCallGetMethodReturnSuccess(): void
     {
         $factory = new Psr17Factory();
-        $request = $factory->createRequest(HttpMethod::METHOD_HTTP_GET, ProviderData::HOST);
+        $request = $factory->createRequest(HttpMethod::METHOD_HTTP_GET, self::HOST);
         $curlClient = new CurlClient($factory, $factory);
 
         $resposne = $curlClient->get('localhost');
