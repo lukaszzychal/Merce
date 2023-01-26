@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  merce:
+    image: merce
+    container_name: merce
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/var/www/html
