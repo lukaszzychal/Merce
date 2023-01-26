@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Tests\Client;
+namespace App\Tests\Application;
 
+use App\Client\ClientInterface;
 use App\Client\CurlClient;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 
-class DeleteUseCaseTest extends TestCase
+class DeleteUseCaseTest extends BaseTestCaseTest
 {
-    private ClientInterface $client;
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->client = new CurlClient();
-    }
-
-
+  
     public function testGiveCurlClientWhenSendDeleteMethodaReturnValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");

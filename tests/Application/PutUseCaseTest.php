@@ -2,18 +2,13 @@
 
 namespace App\Client;
 
+use App\Tests\Application\BaseTestCase;
+use App\Tests\Application\BaseTestCaseTest;
 use PHPUnit\Framework\TestCase;
 use App\Client\CurlClient;
 
-class PutUseCaseTest extends TestCase
+class PutUseCaseTest extends BaseTestCaseTest
 {
-    private ClientInterface $client;
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->client = new CurlClient();
-    }
-
 
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnValidResposne(): void
     {

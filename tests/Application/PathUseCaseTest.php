@@ -3,17 +3,12 @@
 namespace App\Client;
 
 use App\Client\CurlClient;
+use App\Tests\Application\BaseTestCase;
+use App\Tests\Application\BaseTestCaseTest;
 use PHPUnit\Framework\TestCase;
 
-class PathUseCaseTest extends TestCase
+class PathUseCaseTest extends BaseTestCaseTest
 {
-    private ClientInterface $client;
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->client = new CurlClient();
-    }
-
     public function testGiveCurlClientWhenSendPathMethodWithDataReturnInValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");

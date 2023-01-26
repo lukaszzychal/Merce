@@ -9,15 +9,8 @@ use PHPUnit\Framework\TestCase;
  *
  * @group app_get
  */
-class GetUseCaseTest extends TestCase
+class GetUseCaseTest extends BaseTestCaseTest
 {
-    private ClientInterface $client;
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->client = new CurlClient();
-    }
-
     public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");
