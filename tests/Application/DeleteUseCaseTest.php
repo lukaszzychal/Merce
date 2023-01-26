@@ -2,6 +2,7 @@
 
 namespace App\Tests\Client;
 
+use App\Client\CurlClient;
 use PHPUnit\Framework\TestCase;
 
 class DeleteUseCaseTest extends TestCase

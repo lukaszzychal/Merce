@@ -2,6 +2,7 @@
 
 namespace App\Client;
 
+use App\Client\CurlClient;
 use PHPUnit\Framework\TestCase;
 
 class PathUseCaseTest extends TestCase

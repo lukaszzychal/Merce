@@ -3,6 +3,7 @@
 namespace App\Client;
 
 use PHPUnit\Framework\TestCase;
+use App\Client\CurlClient;
 
 class PutUseCaseTest extends TestCase
 {
