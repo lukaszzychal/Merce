@@ -6,5 +6,16 @@
     "scripts": {
         "test": "./vendor/bin/phpunit ./tests/",
         "fix-code": "./vendor/bin/php-cs-fixer fix . --rules=@PSR12"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Client\\": "src/Client"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\Client\\": "tests/Client",
+            "App\\Client\\": "src/Client"
+        }
     }
 }
