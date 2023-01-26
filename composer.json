@@ -17,5 +17,9 @@
             "App\\Tests\\Client\\": "tests/Client",
             "App\\Client\\": "src/Client"
         }
+    },
+    "require": {
+        "psr/http-client": "^1.0",
+        "psr/http-message": "^1.0"
     }
 }
