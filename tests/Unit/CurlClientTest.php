@@ -3,6 +3,9 @@
 namespace App\Tests\Unit;
 
 use App\Client\CurlClient;
+use App\Client\Enum\HttpMethod;
+use App\Client\Enum\HttpStatus;
+use App\Tests\Provider\ProviderData;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -11,30 +14,54 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * 
+ *
  * @group unit_curl_client
  * @group unit
  */
 class CurlClientTest extends TestCase
 {
-    public function testCurlClient(): void
+    public function testGiveCurlClientCallSendRequestReturnSuccess(): void
     {
         $resposneMock = $this->createStub(ResponseInterface::class);
-        $resposneMock->method('getStatusCode')->willReturn(200);
-        
+        $resposneMock->method('getStatusCode')->willReturn(HttpStatus::STATUS_OK);
+
         $resposneFactoryMock = $this->createMock(ResponseFactoryInterface::class);
         $resposneFactoryMock->expects($this->once())
             ->method('createResponse')
-            ->withConsecutive([200, 'test'])
+            ->withConsecutive([HttpStatus::STATUS_OK])
             ->willReturn($resposneMock);
+
+        $requestFactoryMock = $this->createStub(RequestFactoryInterface::class);
         $requestMock =  $this->createStub(RequestInterface::class);
-        
-        $curlClient = new CurlClient($resposneFactoryMock);
+
+        $curlClient = new CurlClient($resposneFactoryMock, $requestFactoryMock);
         $resposne = $curlClient->sendRequest($requestMock);
 
         $this->assertInstanceOf(ResponseInterface::class, $resposne);
-        $this->assertSame(200, $resposne->getStatusCode());
-        
-        
+        $this->assertSame(HttpStatus::STATUS_OK, $resposne->getStatusCode());
+    }
+
+    public function testGiveCurlClientCallGetMethodReturnSuccess(): void
+    {
+        $resposneMock = $this->createStub(ResponseInterface::class);
+        $resposneMock->method('getStatusCode')->willReturn(HttpStatus::STATUS_OK);
+
+        $resposneFactoryMock = $this->createMock(ResponseFactoryInterface::class);
+        $resposneFactoryMock->expects($this->once())
+            ->method('createResponse')
+            ->withConsecutive([HttpStatus::STATUS_OK])
+            ->willReturn($resposneMock);
+        $requestMock =  $this->createStub(RequestInterface::class);
+        $requestFactoryMock = $this->createMock(RequestFactoryInterface::class);
+        $requestFactoryMock->expects($this->once())
+            ->method('createRequest')->withConsecutive([HttpMethod::METHOD_HTTP_GET, ProviderData::HOST])
+            ->willReturn($requestMock);
+
+
+        $curlClient = new CurlClient($resposneFactoryMock, $requestFactoryMock);
+        $resposne = $curlClient->get(ProviderData::HOST);
+
+        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+        $this->assertSame(HttpStatus::STATUS_OK, $resposne->getStatusCode());
     }
 }
