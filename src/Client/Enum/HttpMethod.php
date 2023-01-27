@@ -6,9 +6,9 @@ namespace App\Client\Enum;
 
 final class HttpMethod
 {
-    public const METHOD_HTTP_GET = 'GET';
-    public const METHOD_HTTP_POST = 'POST';
-    public const METHOD_HTTP_PUT = 'PUT';
-    public const METHOD_HTTP_PATH = 'PATH';
-    public const METHOD_HTTP_DELETE = 'DELETE';
+    public const GET = 'GET';
+    public const POST = 'POST';
+    public const PUT = 'PUT';
+    public const PATH = 'PATH';
+    public const DELETE = 'DELETE';
 }
