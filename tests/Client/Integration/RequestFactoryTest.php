@@ -30,7 +30,6 @@ class RequestFactoryTest extends TestCase
         $this->assertInstanceOf(RequestInterface::class, $reqest);
         $this->assertSame($method, $reqest->getMethod());
         $this->assertSame($host, (string) $reqest->getUri());
-
     }
 
     public function testCreateConcretFactory(): void
