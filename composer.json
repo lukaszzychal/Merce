@@ -1,17 +1,17 @@
 {
     "scripts": {
-        "test": "./vendor/bin/phpunit ./tests/",
+        "test": "./vendor/bin/phpunit .",
         "fix-code": "./vendor/bin/php-cs-fixer fix . --rules=@PSR12"
     },
     "autoload": {
         "psr-4": {
-            "App\\Client\\": "src/Client"
+            "App\\Client\\": "src/Client/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests",
-            "App\\Client\\": "src/Client"
+            "App\\Tests\\Client\\": "tests/Client/",
+            "App\\Client\\": "src/Client/"
         }
     },
     "require": {
