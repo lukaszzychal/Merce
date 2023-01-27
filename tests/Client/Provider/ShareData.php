@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Client\Provider;
+namespace App\Tests\Client\Provider;
 
 class ShareData
 {
-    public const HOST = 'http://test-api';
+    public const HOST = 'http://localhost';
 }
