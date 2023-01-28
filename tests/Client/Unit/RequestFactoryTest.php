@@ -11,6 +11,7 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * @group unit_request_factory
+ * @group request_factory
  */
 class RequestFactoryTest extends TestCase
 {

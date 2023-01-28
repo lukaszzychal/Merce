@@ -5,22 +5,22 @@ namespace App\Tests\Client\Integration;
 use App\Client\Enum\HttpMethod;
 use App\Client\Factory\AbstractRequestFactory;
 use App\Client\Factory\ProxyRequestFactory;
-use App\Tests\Client\Fake\FakeRequestFactory;
 use App\Tests\Client\Provider\ShareData;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
  * @group inte_request_factory
+ * @group request_factory
  */
 class RequestFactoryTest extends TestCase
 {
-    public function testCreateDefaultFactory(): void
+    public function testUSeDefaultFactory(): void
     {
         $method = HttpMethod::GET;
         $host = ShareData::HOST;
+
         $reqestFactory = new ProxyRequestFactory();
 
         $reqest = $reqestFactory->createRequest($method, $host);
@@ -32,17 +32,15 @@ class RequestFactoryTest extends TestCase
         $this->assertSame($host, (string) $reqest->getUri());
     }
 
-    public function testCreateConcretFactory(): void
+    public function testUseConcretFactory(): void
     {
-        $reqestFactory = new FakeRequestFactory(
-            $this->createStub(RequestInterface::class),
-            $this->createStub(RequestFactoryInterface::class)
+        $reqestFactory = new ProxyRequestFactory(
+            new Psr17Factory()
         );
 
         $reqest = $reqestFactory->createRequest('GET', 'http://test-api');
 
         $this->assertInstanceOf(AbstractRequestFactory::class, $reqestFactory);
         $this->assertInstanceOf(RequestInterface::class, $reqest);
-        $this->assertNotInstanceOf(Psr17Factory::class, $reqestFactory->getFactory());
     }
 }
