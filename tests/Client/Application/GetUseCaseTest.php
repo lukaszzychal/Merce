@@ -2,39 +2,38 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application;
-
-use App\Client\CurlClient;
-use PHPUnit\Framework\TestCase;
+namespace App\Tests\Client\Application;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  *
  * @group app_get
  */
-class GetUseCaseTest extends BaseTestCaseTest
+class GetUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
     {
-        $this->markTestSkipped("Not Implemetation. ToDo");
+        
         $resposne = $this->client->get('http://localhost');
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(200, $resposne->getStatus());
-        $this->assertStringContainsString("some tekst", $resposne->getBody());
+        
+        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+        $this->assertSame(200, $resposne->getStatusCode());
+        $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
+        $this->assertStringContainsString("any Text", (string) $resposne->getBody()->getContents());
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithOptionsREturnValidResponse(): void
     {
-        $this->markTestSkipped("Not Implemetation. ToDo");
         $resposne = $this->client->get('http://localhost', [
             'headers' => [
                 'content-type' => 'aplication/json'
             ]
         ]);
 
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(200, $resposne->getStatus());
-        $this->assertStringContainsString("some tekst", $resposne->getBody());
+        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+        $this->assertSame(200, $resposne->getStatusCode());
+        $this->assertTrue($resposne->hasHeader('content-type'));
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithEmptyUriReturnBadRequestResposne(): void
@@ -43,7 +42,7 @@ class GetUseCaseTest extends BaseTestCaseTest
         $resposne = $this->client->get('');
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(400, $resposne->getStatus());
+        $this->assertSame(400, $resposne->getStatusCode());
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithNotExistUriReturnNotFoundResposne(): void
@@ -52,7 +51,7 @@ class GetUseCaseTest extends BaseTestCaseTest
         $resposne = $this->client->get('http://localhost/NotExistPage');
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatus());
+        $this->assertSame(404, $resposne->getStatusCode());
     }
 
 
@@ -70,7 +69,7 @@ class GetUseCaseTest extends BaseTestCaseTest
         ]);
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatus());
+        $this->assertSame(404, $resposne->getStatusCode());
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithWrongAuthJWTReturnFailedResposne(): void
@@ -86,7 +85,7 @@ class GetUseCaseTest extends BaseTestCaseTest
         ]);
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatus());
+        $this->assertSame(404, $resposne->getStatusCode());
     }
 
 
@@ -100,7 +99,7 @@ class GetUseCaseTest extends BaseTestCaseTest
         ]);
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatus());
+        $this->assertSame(404, $resposne->getStatusCode());
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithWrongAuthBasicReturnFailedResposne(): void
@@ -113,6 +112,6 @@ class GetUseCaseTest extends BaseTestCaseTest
         ]);
 
         $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatus());
+        $this->assertSame(404, $resposne->getStatusCode());
     }
 }
