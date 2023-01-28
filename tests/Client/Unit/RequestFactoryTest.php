@@ -3,10 +3,10 @@
 namespace App\Tests\Client\Unit;
 
 use App\Client\Factory\AbstractRequestFactory;
+use App\Client\Factory\RequestFactoryInterface;
 use App\Tests\Client\Fake\FakeRequestFactory;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**

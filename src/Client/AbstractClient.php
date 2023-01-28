@@ -28,7 +28,6 @@ abstract class AbstractClient implements ClientInterface
         $this->streamFactory = $factoryClient->streamFactory();
     }
 
-    // abstract public function buildRequest(RequestInterface $request): RequestClient;
      public function execute(RequestInterface $request): array
      {
         return [200, 'any Reason Phrase ', 'any Text', '1.1', [

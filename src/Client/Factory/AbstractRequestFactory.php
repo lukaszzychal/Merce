@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Client\Factory;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\UriInterface;
 
 abstract class AbstractRequestFactory implements  RequestFactoryInterface
 {
     public function __construct(
-        protected ?RequestFactoryInterface $requestFactory = null
+        protected ?PsrRequestFactoryInterface $requestFactory = null
     ) {
         $this->requestFactory = $requestFactory ?? new Psr17Factory();
     }

@@ -2,7 +2,7 @@
 
 namespace App\Client\Factory;
 
-use Psr\Http\Message\RequestFactoryInterface;
+use App\Client\Factory\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 

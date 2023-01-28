@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\Client\Fake;
 
 use App\Client\Factory\AbstractRequestFactory;
-use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
 class FakeRequestFactory extends AbstractRequestFactory
 {
-    public function __construct(private RequestInterface $request, RequestFactoryInterface $requestFactory = null)
+    public function __construct(private RequestInterface $request, PsrRequestFactoryInterface $requestFactory = null)
     {
         parent::__construct($requestFactory);
     }
@@ -20,7 +20,7 @@ class FakeRequestFactory extends AbstractRequestFactory
        return $this->request;
    }
 
-   public function getFactory(): RequestFactoryInterface
+   public function getFactory(): PsrRequestFactoryInterface
    {
        return $this->requestFactory;
    }
