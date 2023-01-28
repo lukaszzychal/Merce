@@ -15,7 +15,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class RequestFactoryTest extends TestCase
 {
-    public function testCreateDefaultFactory(): void
+    public function testUseDefaultFactory(): void
     {
         $reqestFactory = new FakeRequestFactory(
             $this->createStub(RequestInterface::class)
@@ -28,7 +28,7 @@ class RequestFactoryTest extends TestCase
         $this->assertInstanceOf(Psr17Factory::class, $reqestFactory->getFactory());
     }
 
-    public function testCreateConcretFactory(): void
+    public function testUseConcretFactory(): void
     {
         $reqestFactory = new FakeRequestFactory(
             $this->createStub(RequestInterface::class),
@@ -41,4 +41,6 @@ class RequestFactoryTest extends TestCase
         $this->assertInstanceOf(RequestInterface::class, $reqest);
         $this->assertNotInstanceOf(Psr17Factory::class, $reqestFactory->getFactory());
     }
+
+    
 }
