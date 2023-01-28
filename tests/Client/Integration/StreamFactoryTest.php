@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Client\Integration;
 
 use App\Client\Factory\AbstractStreamFactory;
