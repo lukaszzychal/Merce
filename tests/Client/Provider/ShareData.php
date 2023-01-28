@@ -7,6 +7,9 @@ class ShareData
     public const HOST = 'http://localhost';
 
     public const HEADER_ACCEPT = [
+        'header' => [
+            'Accept' =>  'text/html' 
+        ],
         'key' =>'Accept',
         'value' => 'text/html'
     ];
