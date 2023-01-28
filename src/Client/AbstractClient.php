@@ -7,7 +7,7 @@ namespace App\Client;
 use App\Client\Enum\HttpMethod;
 use App\Client\Factory\FactoryInterface;
 use App\Client\Factory\ProxyFactory;
-use Psr\Http\Message\RequestFactoryInterface;
+use App\Client\Factory\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -79,16 +79,11 @@ abstract class AbstractClient implements ClientInterface
     }
     public function get(string $uri, array $options = []): ResponseInterface
     {
-
-        $request = $this->requestFactory->createRequest(HttpMethod::GET, $uri );
-
-        if(isset($options['headers']))
-        {
-            foreach ($options['headers'] as $header => $value) {
-                $request =  $request->withAddedHeader($header, $value);
-             }
-        }
-        
+        $request = $this->requestFactory->createRequestWithHeaders(
+            HttpMethod::GET,
+            $uri,
+            $options['headers'] ?? []
+        );
         
         return $this->sendRequest($request);
     }

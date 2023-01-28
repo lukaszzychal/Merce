@@ -14,7 +14,6 @@ class GetUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
     {
-        
         $resposne = $this->client->get('http://localhost');
         
         $this->assertInstanceOf(ResponseInterface::class, $resposne);
