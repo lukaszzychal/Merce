@@ -3,13 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Client;
+use App\Tests\Client\Application\BaseTestCase;
 
-use App\Tests\Application\BaseTestCase;
-use App\Tests\Application\BaseTestCaseTest;
-use PHPUnit\Framework\TestCase;
-use App\Client\CurlClient;
 
-class PutUseCaseTest extends BaseTestCaseTest
+
+class PutUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnValidResposne(): void
     {

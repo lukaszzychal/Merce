@@ -3,13 +3,9 @@
 declare(strict_types=1);
 
 namespace App\Tests\Application;
+use App\Tests\Client\Application\BaseTestCase;
 
-use App\Client\ClientInterface;
-use App\Client\CurlClient;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use PHPUnit\Framework\TestCase;
-
-class DeleteUseCaseTest extends BaseTestCaseTest
+class DeleteUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendDeleteMethodaReturnValidResposne(): void
     {

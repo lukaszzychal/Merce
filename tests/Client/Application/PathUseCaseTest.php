@@ -3,13 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Client;
+use App\Tests\Client\Application\BaseTestCase;
 
-use App\Client\CurlClient;
-use App\Tests\Application\BaseTestCase;
-use App\Tests\Application\BaseTestCaseTest;
-use PHPUnit\Framework\TestCase;
 
-class PathUseCaseTest extends BaseTestCaseTest
+
+class PathUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendPathMethodWithDataReturnInValidResposne(): void
     {
