@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 namespace App\Client;
+use App\Client\Enum\HttpStatus;
 use App\Tests\Client\Application\BaseTestCase;
+use App\Tests\Client\Provider\ShareData;
 
 
 
@@ -11,15 +13,18 @@ class PostUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendPostMethodWithDataReturnValidResposne(): void
     {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->post('http://localhost/users', [
+        $resposne = $this->client->post('https://dummyjson.com/products/add',[
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
             'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [ ]
+                 'title' => 'BMW Pencil'
+            ])
         ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(201, $resposne->getStatus());
+    
+        $this->assertSame(HttpStatus::OK, $resposne->getStatusCode());
+        $this->assertStringContainsString('101', (string) $resposne->getBody());
     }
+
+
 }
