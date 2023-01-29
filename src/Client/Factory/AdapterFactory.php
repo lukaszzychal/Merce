@@ -6,18 +6,18 @@ use App\Client\Factory\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class ProxyFactory implements FactoryInterface
+class AdapterFactory implements FactoryInterface
 {
     public function requestFactory(): RequestFactoryInterface
     {
-        return new ProxyRequestFactory();
+        return new AdapterRequestFactory();
     }
     public function resposneFactory(): ResponseFactoryInterface
     {
-        return new ProxyResposneFactory();
+        return new AdapterResposneFactory();
     }
     public function streamFactory(): StreamFactoryInterface
     {
-        return new ProxyStreamFactory();
+        return new AdapterStreamFactory();
     }
 }

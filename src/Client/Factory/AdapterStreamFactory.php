@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Client\Factory;
 
-class ProxyStreamFactory extends AbstractStreamFactory
+class AdapterStreamFactory extends AbstractStreamFactory
 {
 }
