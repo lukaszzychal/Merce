@@ -4,11 +4,12 @@ namespace App\Client\Factory;
 
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 interface RequestFactoryInterface extends PsrRequestFactoryInterface
 {
     public function createRequestWithHeaders(
         string $method,
-        string $uri,
+        string|UriInterface $uri,
         array $headers = []
     ): RequestInterface;
 
