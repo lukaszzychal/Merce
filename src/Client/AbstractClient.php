@@ -18,12 +18,15 @@ use Psr\Http\Message\RequestInterface;
 use App\Client\Factory\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractClient implements ClientInterface
 {
     protected RequestFactoryInterface $requestFactory;
     protected ResponseFactoryInterface $resposneFactory;
     protected StreamFactoryInterface $streamFactory;
+
+    // @todo add logger
 
     public function __construct(
         ?FactoryInterface $factoryClient = null
@@ -74,7 +77,7 @@ abstract class AbstractClient implements ClientInterface
             throw $e;
         }
         catch (\Throwable $e) {
-            throw new ClientException('Error Client. Please try again. ', HttpStatus::INTERNAL_SERVER_ERROR);
+            throw new ClientException('Error Client. Please try again. Message: '.$e->getMessage(), HttpStatus::INTERNAL_SERVER_ERROR);
         }
     
     }
