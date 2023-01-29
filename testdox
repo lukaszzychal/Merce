@@ -1,0 +1,104 @@
+PHPUnit 9.5.28 by Sebastian Bergmann and contributors.
+
+Auth Use Case (App\Tests\Client\Application\AuthUseCase)
+ ∅ Give curl client when send get method with right auth j w t return success resposne
+ ∅ Give curl client when send get method with wrong auth j w t return failed resposne
+ ∅ Give curl client when send get method with right auth basic return success resposne
+ ↩ Give curl client when send get method with wrong auth basic return failed resposne
+
+Delete Use Case (App\Tests\Application\DeleteUseCase)
+ ↩ Give curl client when send delete methoda return valid resposne
+ ↩ Give curl client when send delete method return in valid resposne
+
+Get Use Case (App\Tests\Client\Application\GetUseCase)
+ ✔ Give curl client when send get method without options r eturn valid response
+ ✔ Give curl client when send get method with options r eturn valid response
+ ✔ Give curl client when send get to non exist endpoint return non found response
+ ✔ Give curl client when send get method with empty uri return bad request resposne
+
+Path Use Case (App\Client\PathUseCase)
+ ↩ Give curl client when send path method with data return in valid resposne
+ ↩ Give curl client when send path method with data return valid resposne
+
+Post Use Case (App\Client\PostUseCase)
+ ✔ Give curl client when send post method with data return valid resposne
+
+Put Use Case (App\Client\PutUseCase)
+ ∅ Give curl client when send put method with data return valid resposne
+ ↩ Give curl client when send put method with data return in valid resposne
+ ↩ Give curl client when send path method with data return valid resposne
+
+Client (App\Tests\Client\Integration\Client)
+ ✔ Give client with response data when call method return corect psr resposne
+ ✔ Test give reqest execute impl send reqest return resposne data
+ ✔ Method name
+
+Factory (App\Tests\Integration\Factory)
+ ✔ Factory create sub factory
+
+Request Factory (App\Tests\Client\Integration\RequestFactory)
+ ✔ U se default factory
+ ✔ Use invalid http method factory
+ ✔ Use invalid uri factory
+ ✔ Use concret factory
+ ✔ Add headers to request
+ ✔ Create request with headers
+ ✔ Create request with stream
+
+Response Factory (App\Tests\Client\Integration\ResponseFactory)
+ ✔ Use default factory
+ ✔ Use concret factory
+ ✔ Add headers to request
+ ✔ Create request with headers
+
+Stream Factory (App\Tests\Client\Integration\StreamFactory)
+ ✔ Use default factory
+ ✔ Use concret factory
+
+Client Exception (App\Client\Unit\ClientException)
+ ✔ Exception mapping with data set "RequestException to RequestException"
+ ✔ Exception mapping with data set "ClientException to ClientException"
+ ✔ Exception mapping with data set "NetworkException to NetworkException"
+ ✔ Exception mapping with data set "InvalidMethodException to InvalidMethodException"
+ ✔ Exception mapping with data set "InvalidUriException to InvalidUriException"
+ ✔ Exception mapping with data set "AnyException to ClientException"
+
+Factory (App\Tests\Unit\Factory)
+ ✔ Interface when create factory return concreate type factory
+
+Request Factory (App\Tests\Client\Unit\RequestFactory)
+ ✔ Use default factory
+ ✔ Use concret factory
+
+Resposne Factory (App\Tests\Client\Unit\ResposneFactory)
+ ✔ Create default factory
+ ✔ Create concret factory
+
+Stream Factory (App\Tests\Client\Unit\StreamFactory)
+ ✔ U se default factory
+ ✔ Use concret factory
+
+Time: 00:02.335, Memory: 6.00 MB
+
+Summary of non-successful tests:
+
+Auth Use Case (App\Tests\Client\Application\AuthUseCase)
+ ∅ Give curl client when send get method with right auth j w t return success resposne
+ ∅ Give curl client when send get method with wrong auth j w t return failed resposne
+ ∅ Give curl client when send get method with right auth basic return success resposne
+ ↩ Give curl client when send get method with wrong auth basic return failed resposne
+
+Delete Use Case (App\Tests\Application\DeleteUseCase)
+ ↩ Give curl client when send delete methoda return valid resposne
+ ↩ Give curl client when send delete method return in valid resposne
+
+Path Use Case (App\Client\PathUseCase)
+ ↩ Give curl client when send path method with data return in valid resposne
+ ↩ Give curl client when send path method with data return valid resposne
+
+Put Use Case (App\Client\PutUseCase)
+ ∅ Give curl client when send put method with data return valid resposne
+ ↩ Give curl client when send put method with data return in valid resposne
+ ↩ Give curl client when send path method with data return valid resposne
+OK, but incomplete, skipped, or risky tests!
+Tests: 46, Assertions: 104, Skipped: 7, Incomplete: 4.
