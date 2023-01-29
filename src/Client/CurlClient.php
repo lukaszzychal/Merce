@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Client;
+use App\Client\Enum\HttpMethod;
 use App\Client\Enum\HttpStatus;
 use App\Client\Exception\NetworkException;
 use Psr\Http\Message\RequestInterface;
@@ -32,6 +33,15 @@ class CurlClient extends AbstractClient
         );
 }
     curl_setopt($handle, CURLINFO_HEADER_OUT, true);
+
+        $curl_method = match ($request->getMethod()) {
+            HttpMethod::POST => [CURLOPT_POST => true],
+            HttpMethod::GET => [CURLOPT_HTTPGET => true],
+            HttpMethod::PUT => [CURLOPT_PUT => true],
+            default => [CURLOPT_HTTPGET => true]
+        };
+        $defaults_options = $defaults_options + $curl_method;
+
     curl_setopt_array($handle, $defaults_options);
     $result = curl_exec($handle);
     if($result === false){
