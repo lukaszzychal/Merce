@@ -4,7 +4,10 @@ namespace App\Tests\Client\Provider;
 
 class ShareData
 {
-    public const HOST = 'http://localhost';
+    public const HOST = 'https://jsonplaceholder.typicode.com';
+    public const ENDPOINT = '/users/1';
+
+    public const URI_JSON_DATA = self::HOST.self::ENDPOINT;
 
     public const HEADER_ACCEPT_KEY = 'Accept';
 

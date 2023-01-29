@@ -11,4 +11,8 @@ final class HttpMethod
     public const PUT = 'PUT';
     public const PATH = 'PATH';
     public const DELETE = 'DELETE';
+
+    public const HTTP_METHODS = [
+        self::GET, self::POST, self::PUT, self::PATH, self::DELETE
+    ];
 }
