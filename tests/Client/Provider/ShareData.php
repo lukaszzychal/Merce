@@ -6,12 +6,13 @@ class ShareData
 {
     public const HOST = 'http://localhost';
 
+    public const HEADER_ACCEPT_KEY = 'Accept';
+
+
+public const HEADER_ACCEPT_VALUE= 'text/html' ;
+
     public const HEADER_ACCEPT = [
-        'header' => [
-            'Accept' =>  'text/html' 
-        ],
-        'key' =>'Accept',
-        'value' => 'text/html'
+            self::HEADER_ACCEPT_KEY =>  self::HEADER_ACCEPT_VALUE
     ];
     
     public const HEADER_ACCEPT_LANGUAGE = [
