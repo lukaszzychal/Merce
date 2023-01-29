@@ -5,6 +5,12 @@ declare(strict_types=1);
 namespace App\Client;
 
 use App\Client\Enum\HttpMethod;
+use App\Client\Enum\HttpStatus;
+use App\Client\Exception\ClientException;
+use App\Client\Exception\InvalidMethodException;
+use App\Client\Exception\InvalidUriException;
+use App\Client\Exception\NetworkException;
+use App\Client\Exception\RequestException;
 use App\Client\Factory\FactoryInterface;
 use App\Client\Factory\ProxyFactory;
 use App\Client\Factory\RequestFactoryInterface;
@@ -57,10 +63,19 @@ abstract class AbstractClient implements ClientInterface
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $responseDTO = $this->execute($request);
-        $response = $this->buildResposnePsr( $responseDTO);
-      
-        return $response;
+        try {
+            $responseDTO = $this->execute($request);
+            $response = $this->buildResposnePsr( $responseDTO);
+          
+            return $response;
+        } catch (RequestException | ClientException | NetworkException $e) {
+            throw $e;
+        }catch (InvalidMethodException | InvalidUriException $e) {
+            throw $e;
+        }catch (\Throwable $e) {
+            throw new ClientException('Error Client. Please try again. ', HttpStatus::INTERNAL_SERVER_ERROR);
+        }
+    
     }
     public function get(string $uri, array $options = []): ResponseInterface
     {
