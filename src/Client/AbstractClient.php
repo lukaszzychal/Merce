@@ -18,12 +18,15 @@ use Psr\Http\Message\RequestInterface;
 use App\Client\Factory\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractClient implements ClientInterface
 {
     protected RequestFactoryInterface $requestFactory;
     protected ResponseFactoryInterface $resposneFactory;
     protected StreamFactoryInterface $streamFactory;
+
+    // @todo add logger
 
     public function __construct(
         ?FactoryInterface $factoryClient = null
@@ -72,20 +75,42 @@ abstract class AbstractClient implements ClientInterface
             throw $e;
         }catch (InvalidMethodException | InvalidUriException $e) {
             throw $e;
-        }catch (\Throwable $e) {
-            throw new ClientException('Error Client. Please try again. ', HttpStatus::INTERNAL_SERVER_ERROR);
+        }
+        catch (\Throwable $e) {
+            throw new ClientException('Error Client. Please try again. Message: '.$e->getMessage(), HttpStatus::INTERNAL_SERVER_ERROR);
         }
     
     }
     public function get(string $uri, array $options = []): ResponseInterface
     {
-        $request = $this->requestFactory->createRequestWithHeaders(
-            HttpMethod::GET,
-            $uri,
-            $options['headers'] ?? []
-        );
-        
+        $request = $this->buildReqest(HttpMethod::GET, $uri, $options);
+
         return $this->sendRequest($request);
     }
 
+    public function post(string $uri, array $options = []): ResponseInterface
+    {
+        $request = $this->buildReqest(HttpMethod::POST, $uri, $options);
+
+        return $this->sendRequest($request);
+    }
+
+    public function put(string $uri, array $options = []): ResponseInterface
+    {
+        $request = $this->buildReqest(HttpMethod::PUT, $uri, $options);
+
+        return $this->sendRequest($request);
+    }
+    private function buildReqest(string $method, string $uri, array $options = []): RequestInterface
+    {
+        $stream = $this->streamFactory->createStream($options['body'] ?? '');
+        $request = $this->requestFactory->createRequestFrom(
+            $method,
+            $uri,
+            $options['headers'] ?? [],
+            $stream
+        );
+
+        return $request;
+    }
 }

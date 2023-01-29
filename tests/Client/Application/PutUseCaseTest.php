@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Client;
+use App\Client\Enum\HttpStatus;
 use App\Tests\Client\Application\BaseTestCase;
 
 
@@ -11,17 +12,24 @@ class PutUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnValidResposne(): void
     {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->put('http://localhost/users', [
+        $this->markTestIncomplete(' Incomplet curl implement');
+        $resposne = $this->client->put('https://dummyjson.com/products/1',[
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
             'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [ ]
+                 'title' => 'iPhone Galaxy +1'
+            ])
         ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(201, $resposne->getStatus());
-        $this->assertSame(204, $resposne->getStatus());
+        
+        $this->assertSame(HttpStatus::OK, $resposne->getStatusCode());
+        $contents = (string) $resposne->getBody();
+        $this->assertJson($contents);
+        $contentsArray = json_decode($contents, true);
+        $this->assertIsArray($contentsArray);
+        $this->assertGreaterThan(0, count($contentsArray));
+        $this->assertArrayHasKey('title',$contentsArray);
+        $this->assertSame('iPhone Galaxy +1', $contentsArray['title']);
     }
 
 
@@ -29,28 +37,12 @@ class PutUseCaseTest extends BaseTestCase
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnInValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->put('http://localhost/users', [
-            'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [ ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(400, $resposne->getStatus());
+      
     }
 
     public function testGiveCurlClientWhenSendPathMethodWithDataReturnValidResposne(): void
     {
         $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->put('http://localhost/users', [
-            'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [ ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(200, $resposne->getStatus());
+      
     }
 }

@@ -7,6 +7,7 @@ use App\Client\Exception\InvalidMethodException;
 use App\Client\Exception\InvalidUriException;
 use App\Client\Factory\AbstractRequestFactory;
 use App\Client\Factory\ProxyRequestFactory;
+use App\Client\Factory\ProxyStreamFactory;
 use App\Tests\Client\Provider\ShareData;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
@@ -99,8 +100,20 @@ class RequestFactoryTest extends TestCase
            'Any-Header' => 'any value header'
         ];
 
-        $request = $reqestFactory->createRequestWithHeaders(HttpMethod::GET, ShareData::HOST, $anyHeaders);
+        $request = $reqestFactory->createRequestFrom(HttpMethod::GET, ShareData::HOST, $anyHeaders, null);
         $this->assertTrue($request->hasHeader('Any-Header'));
         $this->assertSame('any value header', $request->getHeaders()['Any-Header'][0]);
+    }
+
+    public function testCreateRequestWithStream(): void
+    {
+        $reqestFactory = new ProxyRequestFactory();
+        $anyHeaders = [  ];
+        $streamFactory = new ProxyStreamFactory();
+        $stream = $streamFactory->createStream('any contetn');
+        
+        $request = $reqestFactory->createRequestFrom(HttpMethod::GET, ShareData::HOST, $anyHeaders, $stream);
+
+        $this->assertSame('any contetn',(string) $request->getBody());
     }
 }

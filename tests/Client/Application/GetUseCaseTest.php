@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 namespace App\Tests\Client\Application;
+use App\Client\Enum\HttpStatus;
+use App\Client\Exception\InvalidUriException;
 use App\Tests\Client\Provider\ShareData;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -13,105 +15,60 @@ use Psr\Http\Message\StreamInterface;
  */
 class GetUseCaseTest extends BaseTestCase
 {
-    // public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
-    // {
-    //     $resposne = $this->client->get(ShareData::URI_JSON_DATA);
-        
-    //     $this->assertInstanceOf(ResponseInterface::class, $resposne);
-    //     $this->assertSame(200, $resposne->getStatusCode());
-    //     $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
-    //     $this->assertStringContainsString("any Text", (string) $resposne->getBody()->getContents());
-    // }
+    public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
+    {
+        $resposne = $this->client->get(ShareData::URI_JSON_DATA);
 
+        $this->assertResposne($resposne);
+        $this->assertSame(HttpStatus::OK, $resposne->getStatusCode());
+    }
+
+    private function assertResposne(ResponseInterface $resposne): void
+    {
+        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+    
+        $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
+        $contents = (string) $resposne->getBody();
+        $this->assertJson($contents);
+        $contentsArray = json_decode($contents, true);
+        $this->assertIsArray($contentsArray);
+        $this->assertGreaterThan(0, count($contentsArray));
+    }
+
+    /**
+ *
+ * @group app_get_1
+ */
     public function testGiveCurlClientWhenSendGetMethodWithOptionsREturnValidResponse(): void
     {
         $resposne = $this->client->get(ShareData::URI_JSON_DATA, [
             'headers' => [
-                'Accept' => 'aplication/json'
+                'Accept' => 'my header'
             ]
         ]);
 
-        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+        $this->assertResposne($resposne);
         $this->assertSame(200, $resposne->getStatusCode());
-        $this->assertTrue($resposne->hasHeader('content-type'));
+    }
+
+    public function testGiveCurlClientWhenSendGetToNonExistEndpointReturnNonFoundResponse(): void
+    {
+        
+        $resposne = $this->client->get('https://jsonplaceholder.typicode.com/endpoint-not-exist/1');
+        
+        $this->assertInstanceOf(ResponseInterface::class, $resposne);
+        $this->assertSame(HttpStatus::NOT_FOUND, $resposne->getStatusCode());
+        $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
+    
     }
 
     public function testGiveCurlClientWhenSendGetMethodWithEmptyUriReturnBadRequestResposne(): void
     {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('');
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(400, $resposne->getStatusCode());
+        $this->expectException(InvalidUriException::class);
+        $this->client->get('');
     }
 
-    public function testGiveCurlClientWhenSendGetMethodWithNotExistUriReturnNotFoundResposne(): void
-    {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('http://localhost/NotExistPage');
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatusCode());
-    }
+   
 
 
-
-    public function testGiveCurlClientWhenSendGetMethodWithRightAuthJWTReturnSuccessResposne(): void
-    {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('http://localhost/auth-jwt', [
-            'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [
-                'Accept' => 'aplication/json'
-            ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatusCode());
-    }
-
-    public function testGiveCurlClientWhenSendGetMethodWithWrongAuthJWTReturnFailedResposne(): void
-    {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('http://localhost/auth-jwt', [
-            'body' => json_encode([
-                'data1' => 'value1'
-            ]),
-            'headers' => [
-                'Accept' => 'aplication/json'
-            ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatusCode());
-    }
-
-
-    public function testGiveCurlClientWhenSendGetMethodWithRightAuthBasicReturnSuccessResposne(): void
-    {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('http://localhost/auth-basic', [
-            'headers' => [
-                'Accept' => 'aplication/json'
-            ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatusCode());
-    }
-
-    public function testGiveCurlClientWhenSendGetMethodWithWrongAuthBasicReturnFailedResposne(): void
-    {
-        $this->markTestSkipped("Not Implemetation. ToDo");
-        $resposne = $this->client->get('http://localhost/auth-basic', [
-            'headers' => [
-                'Accept' => 'aplication/json'
-            ]
-        ]);
-
-        $this->assertInstanceOf(ResposneInterface::class, $resposne);
-        $this->assertSame(404, $resposne->getStatusCode());
-    }
 }
