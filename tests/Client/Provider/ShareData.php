@@ -6,8 +6,11 @@ class ShareData
 {
     public const HOST = 'https://jsonplaceholder.typicode.com';
     public const ENDPOINT = '/users/1';
+    public const NOT_EXIST_ENDPOINT = '/endpoint-not-exist/1';
+    
 
     public const URI_JSON_DATA = self::HOST.self::ENDPOINT;
+    public const INVALID_URI = self::HOST.self::NOT_EXIST_ENDPOINT;
 
     public const HEADER_ACCEPT_KEY = 'Accept';
 
