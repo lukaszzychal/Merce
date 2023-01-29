@@ -95,6 +95,12 @@ abstract class AbstractClient implements ClientInterface
         return $this->sendRequest($request);
     }
 
+    public function put(string $uri, array $options = []): ResponseInterface
+    {
+        $request = $this->buildReqest(HttpMethod::PUT, $uri, $options);
+
+        return $this->sendRequest($request);
+    }
     private function buildReqest(string $method, string $uri, array $options = []): RequestInterface
     {
         $stream = $this->streamFactory->createStream($options['body'] ?? '');

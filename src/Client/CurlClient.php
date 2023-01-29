@@ -40,6 +40,7 @@ class CurlClient extends AbstractClient
             HttpMethod::PUT => [CURLOPT_PUT => true],
             default => [CURLOPT_HTTPGET => true]
         };
+     
         $defaults_options = $defaults_options + $curl_method;
 
     curl_setopt_array($handle, $defaults_options);

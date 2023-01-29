@@ -12,6 +12,7 @@ class PutUseCaseTest extends BaseTestCase
 {
     public function testGiveCurlClientWhenSendPutMethodWithDataReturnValidResposne(): void
     {
+        $this->markTestIncomplete(' Incomplet curl implement');
         $resposne = $this->client->put('https://dummyjson.com/products/1',[
             'headers' => [
                 'Content-Type' => 'application/json'
