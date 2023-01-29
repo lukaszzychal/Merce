@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Client\Integration;
 
 use App\Client\Factory\AbstractStreamFactory;
-use App\Client\Factory\ProxyStreamFactory;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
@@ -19,7 +18,7 @@ class StreamFactoryTest extends TestCase
     private const ANY_CONTENT = 'any content';
     public function testUseDefaultFactory(): void
     {
-        $factory = new ProxyStreamFactory();
+        $factory = new AdapterStreamFactory();
 
         $stream = $factory->createStream(self::ANY_CONTENT);
 
@@ -29,7 +28,7 @@ class StreamFactoryTest extends TestCase
 
     public function testUseConcretFactory(): void
     {
-        $factory = new ProxyStreamFactory(
+        $factory = new AdapterStreamFactory(
             new Psr17Factory()
         );
 

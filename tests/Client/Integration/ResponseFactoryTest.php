@@ -6,8 +6,7 @@ namespace App\Tests\Client\Integration;
 
 use App\Client\Enum\HttpStatus;
 use App\Client\Factory\AbstractResposneFactory;
-use App\Client\Factory\ProxyResposneFactory;
-use App\Client\Factory\ProxyStreamFactory;
+use App\Client\Factory\AdapterResposneFactory;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -20,7 +19,7 @@ class ResponseFactoryTest extends TestCase
 {
     public function testUseDefaultFactory(): void
     {
-        $factory = new ProxyResposneFactory();
+        $factory = new AdapterResposneFactory();
 
         $reqest = $factory->createResponse(HttpStatus::CREATED);
 
@@ -30,7 +29,7 @@ class ResponseFactoryTest extends TestCase
 
     public function testUseConcretFactory(): void
     {
-        $factory = new ProxyResposneFactory(
+        $factory = new AdapterResposneFactory(
             new Psr17Factory()
         );
 
@@ -43,7 +42,7 @@ class ResponseFactoryTest extends TestCase
 
     public function testAddHeadersToRequest(): void
     {
-        $factory = new ProxyResposneFactory();
+        $factory = new AdapterResposneFactory();
         $anyStatus = HttpStatus::NOT_FOUND;
         $anyHeaders = [
             'Any-Header' => 'any value header'
@@ -61,8 +60,8 @@ class ResponseFactoryTest extends TestCase
 
     public function testCreateRequestWithHeaders(): void
     {
-        $resposneFactory = new ProxyResposneFactory();
-        $streamFactory = new ProxyStreamFactory();
+        $resposneFactory = new AdapterResposneFactory();
+        $streamFactory = new AdapterStreamFactory();
         $anyHeaders = [
            'Any-Header' => 'any value header'
         ];

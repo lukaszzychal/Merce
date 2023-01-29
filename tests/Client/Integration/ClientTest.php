@@ -2,7 +2,6 @@
 
 namespace App\Tests\Client\Integration;
 use App\Client\Enum\HttpStatus;
-use App\Client\Factory\ProxyFactory;
 use App\Client\ResponseDTO;
 use App\Tests\Client\Fake\FakeClient;
 use PHPUnit\Framework\TestCase;

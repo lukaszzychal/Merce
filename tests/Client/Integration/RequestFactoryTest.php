@@ -6,8 +6,8 @@ use App\Client\Enum\HttpMethod;
 use App\Client\Exception\InvalidMethodException;
 use App\Client\Exception\InvalidUriException;
 use App\Client\Factory\AbstractRequestFactory;
-use App\Client\Factory\ProxyRequestFactory;
-use App\Client\Factory\ProxyStreamFactory;
+use App\Client\Factory\AdapterRequestFactory;
+use App\Client\Factory\AdapterStreamFactory;
 use App\Tests\Client\Provider\ShareData;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
@@ -24,12 +24,12 @@ class RequestFactoryTest extends TestCase
         $method = HttpMethod::GET;
         $host = ShareData::HOST;
 
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
 
         $reqest = $reqestFactory->createRequest($method, $host);
 
         $this->assertInstanceOf(AbstractRequestFactory::class, $reqestFactory);
-        $this->assertInstanceOf(ProxyRequestFactory::class, $reqestFactory);
+        $this->assertInstanceOf(AdapterRequestFactory::class, $reqestFactory);
         $this->assertInstanceOf(RequestInterface::class, $reqest);
         $this->assertSame($method, $reqest->getMethod());
         $this->assertSame($host, (string) $reqest->getUri());
@@ -40,7 +40,7 @@ class RequestFactoryTest extends TestCase
         $invalidMethod = 'invalid method';
         $validHost = ShareData::HOST;
 
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
 
         $this->expectException(InvalidMethodException::class);
         $this->expectExceptionMessage(
@@ -57,7 +57,7 @@ class RequestFactoryTest extends TestCase
         $validMethod = HttpMethod::POST;
         $invalidHost = 'invalid host';
 
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
 
         $this->expectException(InvalidUriException::class);
         $this->expectExceptionMessage("Invalid URI. Give 'invalid host' .");
@@ -68,7 +68,7 @@ class RequestFactoryTest extends TestCase
 
     public function testUseConcretFactory(): void
     {
-        $reqestFactory = new ProxyRequestFactory(
+        $reqestFactory = new AdapterRequestFactory(
             new Psr17Factory()
         );
 
@@ -80,7 +80,7 @@ class RequestFactoryTest extends TestCase
 
     public function testAddHeadersToRequest(): void
     {
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
         $anyHeaders = [
            'Any-Header' => 'any value header'
         ];
@@ -95,7 +95,7 @@ class RequestFactoryTest extends TestCase
 
     public function testCreateRequestWithHeaders(): void
     {
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
         $anyHeaders = [
            'Any-Header' => 'any value header'
         ];
@@ -107,9 +107,9 @@ class RequestFactoryTest extends TestCase
 
     public function testCreateRequestWithStream(): void
     {
-        $reqestFactory = new ProxyRequestFactory();
+        $reqestFactory = new AdapterRequestFactory();
         $anyHeaders = [  ];
-        $streamFactory = new ProxyStreamFactory();
+        $streamFactory = new AdapterStreamFactory();
         $stream = $streamFactory->createStream('any contetn');
         
         $request = $reqestFactory->createRequestFrom(HttpMethod::GET, ShareData::HOST, $anyHeaders, $stream);

@@ -1,4 +1,5 @@
 {
+    "name": "httpclientformarce",
     "scripts": {
         "test": "./vendor/bin/phpunit .",
         "fix-code": "./vendor/bin/php-cs-fixer fix . --rules=@PSR12"
