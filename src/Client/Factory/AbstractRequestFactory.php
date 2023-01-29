@@ -11,6 +11,7 @@ use App\Client\Exception\RequestException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 abstract class AbstractRequestFactory implements  RequestFactoryInterface
@@ -34,13 +35,20 @@ abstract class AbstractRequestFactory implements  RequestFactoryInterface
         return $this->requestFactory->createRequest($method, $uri);
     }
 
-    public function createRequestWithHeaders(
+    public function createRequestFrom(
         string $method,
         string|UriInterface $uri,
-        array $headers = []
+        array $headers = [],
+        StreamInterface $stream = null
     ): RequestInterface
     {
         $request = $this->createRequest($method, $uri);
+      
+      if(!is_null($stream))
+      {
+            $request = $request->withBody($stream);
+            $request->getBody()->rewind();
+      }  
         $request = $this->addHeadersToRequest($request, $headers);
         return $request;
     }

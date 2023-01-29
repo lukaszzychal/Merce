@@ -72,19 +72,32 @@ abstract class AbstractClient implements ClientInterface
             throw $e;
         }catch (InvalidMethodException | InvalidUriException $e) {
             throw $e;
-        }catch (\Throwable $e) {
+        }
+        catch (\Throwable $e) {
             throw new ClientException('Error Client. Please try again. ', HttpStatus::INTERNAL_SERVER_ERROR);
         }
     
     }
     public function get(string $uri, array $options = []): ResponseInterface
     {
+  
+        $request = $this->requestFactory->createRequestFrom(
+            HttpMethod::GET,
+            $uri,
+            $options['headers'] ?? [],
+            null
+        );
+        return $this->sendRequest($request);
+    }
+
+    public function post(string $uri, array $options = []): ResponseInterface
+    {
+  
         $request = $this->requestFactory->createRequestWithHeaders(
             HttpMethod::GET,
             $uri,
-            $options['headers'] ?? []
+            $options['body'] ?? []
         );
-        
         return $this->sendRequest($request);
     }
 
