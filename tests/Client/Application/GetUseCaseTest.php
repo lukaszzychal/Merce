@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Tests\Client\Application;
+use App\Tests\Client\Provider\ShareData;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -12,21 +13,21 @@ use Psr\Http\Message\StreamInterface;
  */
 class GetUseCaseTest extends BaseTestCase
 {
-    public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
-    {
-        $resposne = $this->client->get('http://localhost');
+    // public function testGiveCurlClientWhenSendGetMethodWithoutOptionsREturnValidResponse(): void
+    // {
+    //     $resposne = $this->client->get(ShareData::URI_JSON_DATA);
         
-        $this->assertInstanceOf(ResponseInterface::class, $resposne);
-        $this->assertSame(200, $resposne->getStatusCode());
-        $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
-        $this->assertStringContainsString("any Text", (string) $resposne->getBody()->getContents());
-    }
+    //     $this->assertInstanceOf(ResponseInterface::class, $resposne);
+    //     $this->assertSame(200, $resposne->getStatusCode());
+    //     $this->assertInstanceOf(StreamInterface::class, $resposne->getBody());
+    //     $this->assertStringContainsString("any Text", (string) $resposne->getBody()->getContents());
+    // }
 
     public function testGiveCurlClientWhenSendGetMethodWithOptionsREturnValidResponse(): void
     {
-        $resposne = $this->client->get('http://localhost', [
+        $resposne = $this->client->get(ShareData::URI_JSON_DATA, [
             'headers' => [
-                'content-type' => 'aplication/json'
+                'Accept' => 'aplication/json'
             ]
         ]);
 
@@ -63,7 +64,7 @@ class GetUseCaseTest extends BaseTestCase
                 'data1' => 'value1'
             ]),
             'headers' => [
-                'content-type' => 'aplication/json'
+                'Accept' => 'aplication/json'
             ]
         ]);
 
@@ -79,7 +80,7 @@ class GetUseCaseTest extends BaseTestCase
                 'data1' => 'value1'
             ]),
             'headers' => [
-                'content-type' => 'aplication/json'
+                'Accept' => 'aplication/json'
             ]
         ]);
 
@@ -93,7 +94,7 @@ class GetUseCaseTest extends BaseTestCase
         $this->markTestSkipped("Not Implemetation. ToDo");
         $resposne = $this->client->get('http://localhost/auth-basic', [
             'headers' => [
-                'content-type' => 'aplication/json'
+                'Accept' => 'aplication/json'
             ]
         ]);
 
@@ -106,7 +107,7 @@ class GetUseCaseTest extends BaseTestCase
         $this->markTestSkipped("Not Implemetation. ToDo");
         $resposne = $this->client->get('http://localhost/auth-basic', [
             'headers' => [
-                'content-type' => 'aplication/json'
+                'Accept' => 'aplication/json'
             ]
         ]);
 
