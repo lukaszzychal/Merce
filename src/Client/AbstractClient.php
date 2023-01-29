@@ -28,18 +28,7 @@ abstract class AbstractClient implements ClientInterface
         $this->streamFactory = $factoryClient->streamFactory();
     }
 
-     public function execute(RequestInterface $request): ResponseDTO
-     {
-        return new ResponseDTO(
-            200,
-             'any Reason Phrase ',
-              'any Text', 
-               [
-                'content-type' => 'aplication/json'
-            ]
-        );
-     
-     }
+    abstract public function execute(RequestInterface $request): ResponseDTO;
     public function buildResposnePsr(
         ResponseDTO $responseDTO
           ): ResponseInterface
