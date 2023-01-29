@@ -32,7 +32,7 @@ abstract class AbstractRequestFactory implements  RequestFactoryInterface
         return $request;
     }
 
-    public function addHeadersToRequest(RequestInterface $request, array $headers = []): RequestInterface
+    public function addHeadersToRequest(RequestInterface &$request, array $headers = []): RequestInterface
     {
         foreach ($headers as $header => $value) {
            $request =  $request->withAddedHeader($header, $value);

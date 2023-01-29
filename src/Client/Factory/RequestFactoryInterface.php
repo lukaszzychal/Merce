@@ -12,6 +12,6 @@ interface RequestFactoryInterface extends PsrRequestFactoryInterface
         array $headers = []
     ): RequestInterface;
 
-    public function addHeadersToRequest(RequestInterface $request, array $headers = []): RequestInterface;
+    public function addHeadersToRequest(RequestInterface &$request, array $headers = []): RequestInterface;
 
 }

@@ -43,4 +43,31 @@ class RequestFactoryTest extends TestCase
         $this->assertInstanceOf(AbstractRequestFactory::class, $reqestFactory);
         $this->assertInstanceOf(RequestInterface::class, $reqest);
     }
+
+    public function testAddHeadersToRequest(): void
+    {
+        $reqestFactory = new ProxyRequestFactory();
+        $anyHeaders = [
+           'Any-Header' => 'any value header'
+        ];
+        $request = $reqestFactory->createRequest('any method', 'any uri');
+        $this->assertFalse($request->hasHeader('Any-Header'));
+
+        $request = $reqestFactory->addHeadersToRequest($request, $anyHeaders);
+        $this->assertTrue($request->hasHeader('Any-Header'));
+        $this->assertSame('any value header', $request->getHeaders()['Any-Header'][0]);
+    }
+
+
+    public function testCreateRequestWithHeaders(): void
+    {
+        $reqestFactory = new ProxyRequestFactory();
+        $anyHeaders = [
+           'Any-Header' => 'any value header'
+        ];
+
+        $request = $reqestFactory->createRequestWithHeaders('any method', 'any uri', $anyHeaders);
+        $this->assertTrue($request->hasHeader('Any-Header'));
+        $this->assertSame('any value header', $request->getHeaders()['Any-Header'][0]);
+    }
 }
