@@ -28,26 +28,32 @@ abstract class AbstractClient implements ClientInterface
         $this->streamFactory = $factoryClient->streamFactory();
     }
 
-     public function execute(RequestInterface $request): array
+     public function execute(RequestInterface $request): ResponseDTO
      {
-        return [200, 'any Reason Phrase ', 'any Text', '1.1', [
-            'content-type' => 'aplication/json'
-        ]];
+        return new ResponseDTO(
+            200,
+             'any Reason Phrase ',
+              'any Text', 
+              '1.1',
+               [
+                'content-type' => 'aplication/json'
+            ]
+        );
+     
      }
     public function buildResposnePsr(
-        int $codeStatus, 
-        string $reasonPhrase, 
-        string $body,
-         string $protocolVersion,
-         array $headers = []
+        ResponseDTO $responseDTO
           ): ResponseInterface
     {
-        $resposne =  $this->resposneFactory->createResponse($codeStatus, $reasonPhrase);
-        $stream = $this->streamFactory->createStream($body);
+        $resposne =  $this->resposneFactory->createResponse(
+            $responseDTO->codeStatus,
+            $responseDTO->reasonPhrase
+        );
+        $stream = $this->streamFactory->createStream($responseDTO->body);
         $stream->seek(0);
         $resposne = $resposne->withBody($stream);
-        $resposne->withProtocolVersion($protocolVersion);
-        foreach ($headers as $header => $value) {
+        $resposne->withProtocolVersion($responseDTO->protocolVersion);
+        foreach ($responseDTO->headers as $header => $value) {
             $resposne =  $resposne->withAddedHeader($header, $value);
          }
         $resposne->getBody()->seek(0);
@@ -66,14 +72,8 @@ abstract class AbstractClient implements ClientInterface
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        [$codeStatus, $reasonPhrase, 
-        $body, $protocolVersion,
-        $headers ] = $this->execute($request);
-        $response = $this->buildResposnePsr( 
-            $codeStatus, $reasonPhrase, 
-            $body, $protocolVersion,
-            $headers
-        );
+        $responseDTO = $this->execute($request);
+        $response = $this->buildResposnePsr( $responseDTO);
       
         return $response;
     }
