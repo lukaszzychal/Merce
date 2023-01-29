@@ -9,7 +9,7 @@ use App\Client\Factory\FactoryInterface;
 use App\Client\Factory\ProxyFactory;
 use App\Client\Factory\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Client\Factory\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -34,7 +34,6 @@ abstract class AbstractClient implements ClientInterface
             200,
              'any Reason Phrase ',
               'any Text', 
-              '1.1',
                [
                 'content-type' => 'aplication/json'
             ]
@@ -45,18 +44,15 @@ abstract class AbstractClient implements ClientInterface
         ResponseDTO $responseDTO
           ): ResponseInterface
     {
-        $resposne =  $this->resposneFactory->createResponse(
-            $responseDTO->codeStatus,
-            $responseDTO->reasonPhrase
-        );
         $stream = $this->streamFactory->createStream($responseDTO->body);
         $stream->seek(0);
-        $resposne = $resposne->withBody($stream);
-        $resposne->withProtocolVersion($responseDTO->protocolVersion);
-        foreach ($responseDTO->headers as $header => $value) {
-            $resposne =  $resposne->withAddedHeader($header, $value);
-         }
-        $resposne->getBody()->seek(0);
+
+        $resposne = $this->resposneFactory->createResponseFrom(
+            $responseDTO->codeStatus,
+            $responseDTO->reasonPhrase,
+            $stream,
+            $responseDTO->headers
+        );
 
         return $resposne;
     }

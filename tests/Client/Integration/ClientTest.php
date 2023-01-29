@@ -32,7 +32,6 @@ class ClientTest extends TestCase
             $this->anyCodeStatus,
             $this->anyReasonPhrase,
             $this->anyBody,
-            $this->anyProtocolVersion,
             $this->anyHeaders
         );
         $resposne = $fakeClient->buildResposnePsr($resposneDTO);
@@ -51,8 +50,6 @@ class ClientTest extends TestCase
     {
         $anyCodeStatus = HttpStatus::OK;
 
-
-        $factory = new ProxyFactory();
         $reqestStub = $this->createStub(RequestInterface::class);
         $fakeClient = new FakeClient();
         $responseDTO = $fakeClient->execute($reqestStub);
@@ -60,7 +57,6 @@ class ClientTest extends TestCase
         $this->assertSame($anyCodeStatus, $responseDTO->codeStatus);
         $this->assertSame($this->anyReasonPhrase, $responseDTO->reasonPhrase);
         $this->assertSame($this->anyBody, $responseDTO->body);
-        $this->assertSame($this->anyProtocolVersion, $responseDTO->protocolVersion);
         $this->assertSame($this->anyHeaders, $responseDTO->headers);
     }
 
